@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var http = require('http-request');
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -31,11 +32,32 @@ exports.readListOfUrls = function(){
 exports.isUrlInList = function(){
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function( url ){
+  fs.appendFile(__dirname + '/../archives/sites.txt', url + "\n",'utf8', function (err, data) {
+    if (err) { throw err; };
+    console.log('The "data to append" was appended to file!');
+  });
 };
 
 exports.isURLArchived = function(){
 };
 
 exports.downloadUrls = function(){
+  // save the response to file with a progress callback
+http.get( {
+  url: 'http://www.twitter.com',
+  progress: function (current, total) {
+    console.log('downloaded %d bytes from %d', current, total); }
+  },
+
+  '../archives/sites/twitter.txt',
+
+  function (err, res) {
+    if (err) {
+      // console.error(err);
+      // return;
+    }
+    console.log(res.code, res.headers, res.file);
+  });
+
 };
