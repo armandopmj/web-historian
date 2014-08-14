@@ -27,19 +27,23 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
+  fs.readFile( __dirname + '/../archives/sites.txt', function (err, data) {
+    if (err) throw err;
+    console.log(data);
+  });
 };
 
 exports.isUrlInList = function(){
 };
 
 exports.addUrlToList = function( url ){
-  fs.appendFile(__dirname + '/../archives/sites.txt', url + "\n",'utf8', function (err, data) {
+  fs.appendFile( __dirname + '/../archives/sites.txt', url + "\n",'utf8', function (err, data) {
     if (err) { throw err; };
-    console.log('The "data to append" was appended to file!');
   });
 };
 
 exports.isURLArchived = function(){
+
 };
 
 exports.downloadUrls = function(){

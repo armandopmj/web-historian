@@ -31,15 +31,6 @@ app.get('*', function(req, res){
   res.send(200, {"greetings": req.path });
 });
 
-app.addUrlToList = function( url, res) {
-  fs.appendFile(__dirname+'/../archives/sites.txt', url + "\n",'utf8', function (err, data) {
-    if (err) { throw err; };
-    console.log('The "data to append" was appended to file!');
-    //res.send( { url:url} );
-  });
-}
-
-
 app.post('*', function(req, res){
   var url = "";
   req.on('data', function( url_chunks ) {
@@ -49,11 +40,9 @@ app.post('*', function(req, res){
   req.on('end', function() {
     url = url.substring(4,url.length);
     helpers.addUrlToList( url );
-    helpers.downloadUrls();
-
+    helpers.downloadUrls( );
+    helpers.readListOfUrls( );
     res.status( 302 ).end();
-
-
   })
 });
 
